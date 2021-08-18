@@ -1,8 +1,15 @@
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable prefer-const */
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+
+
+//var indexRouter = require("./index");
+var usersRouter = require("./users");
 
 const app = express();
 
@@ -16,8 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+
+//app.use("/", indexRouter);
+app.use('/', usersRouter);
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function (req: express.Request, res: express.Response, next) {
   next(createError(404));
 });
 
@@ -26,7 +36,7 @@ app.use(function (
   err: createError.HttpError,
   req: express.Request,
   res: express.Response,
-  _next: express.NextFunction
+  //_next: express.NextFunction
 ) {
   // set locals, only providing error in development
   res.locals.message = err.message;
