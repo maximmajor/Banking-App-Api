@@ -1,6 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable prefer-const */
+
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
@@ -8,8 +6,8 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 
-//var indexRouter = require("./index");
-var usersRouter = require("./users");
+
+import usersRouter  from "./users";
 
 const app = express();
 
@@ -36,7 +34,8 @@ app.use(function (
   err: createError.HttpError,
   req: express.Request,
   res: express.Response,
-  //_next: express.NextFunction
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _next: express.NextFunction
 ) {
   // set locals, only providing error in development
   res.locals.message = err.message;

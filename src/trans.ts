@@ -13,7 +13,7 @@ export function writeDataToFileTrans(filename: string, content: string) {
     "utf8",
     (err: string) => {
       if (err) {
-        console.log(err);
+        console.log(err); 
       }
     }
   );

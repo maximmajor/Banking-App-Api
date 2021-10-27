@@ -5,6 +5,7 @@
 /**
  * Module dependencies.
  */
+require ("dotenv").config()
 
 var app = require('../dist/app').default;
 var debug = require('debug')('008-setup:server');

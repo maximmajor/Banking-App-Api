@@ -6,15 +6,21 @@ const router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
 const { writeDataToFileBal, getDataBaseBal } = require('./bal');
 const { writeDataToFileTrans, getDataBaseTrans } = require('./trans');
+import getAllTransactions from '../src/controllers/transactions'
 
+//FOR CLASS 8
+router.get('/transaction', async (_req, res) =>{
+ const data = await getAllTransactions()
+res.json({data})
+})
 /* GET users listing. */
 // GET ALL BALANCES
 router.get('/balance', function (_req: express.Request, res: express.Response) {
-  const UserAccounts: string = getDataBaseBal();
+  const UserAccounts = getDataBaseBal();
   if (UserAccounts) {
     res.status(200).send(UserAccounts);
   } else {
-    res.status(400).send('Users Account Details NOT found');
+    res.status(404).send('Users Account Details NOT found');
   }
 });
 
@@ -151,7 +157,7 @@ router.post(
       senderAccnt.balance = (+senderAccnt.balance - amount).toString();
       receiverAccnt.balance = (+receiverAccnt.balance + +amount).toString();
       writeDataToFileBal('./balances.json', JSON.stringify(transfers));
-      res.status(200).send('transfer successful');
+      
 
       interface Obj {
         reference: string;
@@ -174,10 +180,11 @@ router.post(
       writeDataToFileTrans(
         './transctions.json', transaction,
       );
+      res.status(200).send('transfer successful');
     } else {
       res.status(401).send('You Have Insufficient Fund');
     }
   },
 );
 
-module.exports = router;
+export default router;
